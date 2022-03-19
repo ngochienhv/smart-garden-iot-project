@@ -1,0 +1,30 @@
+div.sidebar-container {
+  width: 80px;
+  height: 100vh;
+  background-color: #444444;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+div.sidebar-btn-container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 50px;
+}
+
+a.sidebar-btn {
+  margin-top: 20px;
+  background-color: transparent;
+  border: none;
+  font-size: 45px;
+  text-align: center;
+  color: white;
+  text-shadow: 2px 7px 5px rgba(0, 0, 0, 0.3),
+    0px -4px 10px rgba(255, 255, 255, 0.3);
+}
+
+a.sidebar-btn:hover {
+  color: white;
+  text-shadow: 0 2px 1px #232e34, -1px 3px 1px #000000, -2px 5px 1px #000000;
+  border-left: 6px solid white;
+}
