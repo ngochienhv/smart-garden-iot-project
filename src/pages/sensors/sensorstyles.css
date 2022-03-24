@@ -1,0 +1,18 @@
+.sensor-container {
+  padding-top: 50px;
+}
+
+.chart {
+  position: relative;
+  right: 40px;
+  top: -40px;
+}
+
+.current-value {
+  position: relative;
+  text-align: center;
+  font-size: 20px;
+  top: -160px;
+  left: -135px;
+  color: white;
+}

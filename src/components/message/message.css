@@ -1,0 +1,28 @@
+div.message-container {
+  height: 70px;
+  width: 100%;
+  background-color: white;
+  align-items: center;
+  border-radius: 30px;
+  font-size: 20px;
+  font-weight: 500;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+div.message-icon {
+  font-size: 50px;
+}
+
+button.message-dismiss {
+  background: transparent;
+  color: #232e34;
+  font-size: 28px;
+  border-radius: 50px;
+  border: none;
+}
+
+button.message-dismiss:hover {
+  background: transparent;
+  color: red;
+}

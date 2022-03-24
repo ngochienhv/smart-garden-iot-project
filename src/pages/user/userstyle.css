@@ -1,0 +1,95 @@
+div.user-container {
+  padding-top: 30px;
+}
+
+div.device-box {
+  width: 600px;
+  height: 300px;
+  border-radius: 52px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+div.device-title {
+  width: 600px;
+  height: 80px;
+  border-radius: 52px;
+  position: relative;
+  left: -10px;
+  text-align: center;
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+div.device-title h1 {
+  padding-top: 20px;
+}
+
+div.device-description {
+  color: white;
+  font-size: 36px;
+  padding: 10px 100px 0px 100px;
+  text-align: center;
+}
+
+button.view-log-btn {
+  width: 500px;
+  font-size: 36px;
+  position: relative;
+  left: 35px;
+  top: 40px;
+  background: transparent;
+  border-radius: 52px;
+  border: 2px solid black;
+}
+div.sensor-container1 {
+  width: 1250px;
+  padding-top: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+div.sensor-box {
+  width: 260px;
+  height: 300px;
+  border-radius: 40px;
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  text-align: center;
+}
+
+div.sensor-title {
+  width: 260px;
+  height: 100px;
+  position: relative;
+  left: -12px;
+  text-align: center;
+  border-radius: 40px;
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+div.sensor-title h1 {
+  padding-top: 5px;
+  font-size: 36px;
+}
+div.sensor-status {
+  padding-top: 20px;
+}
+
+div.sensor-status h3 {
+  font-size: 36px;
+}
+
+button.edit-value-btn {
+  font-size: 30px;
+  width: 160px;
+  position: relative;
+  top: 30px;
+  background: transparent;
+  border-radius: 40px;
+  border: 2px solid black;
+}

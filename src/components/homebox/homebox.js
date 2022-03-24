@@ -1,106 +1,91 @@
-import React from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import './homebox.css';
 import Chart from './charts';
+import fetching from './fetchData';
 
-const data = [{ time: '2022-03-13', value: 30, v: 100 }, { time: '2022-03-13', value: 23, v: 43 }, { time: '2022-03-20', value: 50, v: 78 }];
+export default function InformationCard() {
+    const [connectionStatus, setConnectionStatus] = React.useState(false);
+    const [tempData, setTempData] = useState();
+    const [tempDataArr, setTempDataArr] = useState([]);
+    const [moistData, setMoistData] = useState();
+    const [moistDataArr, setMoistDataArr] = useState([]);
+    const [lightData, setLightData] = useState();
+    const [lightDataArr, setLightDataArr] = useState([]);
+    const [waterData, setWaterData] = useState();
+    const [waterDataArr, setWaterDataArr] = useState([]);
+    useEffect(() => {
+        fetching(setTempData, setTempDataArr, setConnectionStatus, 'bbc-temp');
+        fetching(setMoistData, setMoistDataArr, setConnectionStatus, 'bbc-humi');
+        fetching(setLightData, setLightDataArr, setConnectionStatus, 'bbc-light');
+        fetching(setWaterData, setWaterDataArr, setConnectionStatus, 'bbc-water');
+    }, [connectionStatus]);
 
-export default class InformationCard extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            tempData: "",
-            tempDataArr: []
-        }
-    }
-    componentDidMount() {
-        axios.get("https://io.adafruit.com/api/v2/ngochienhv/feeds/bbc-temp/data")
-            .then((response) => {
-                let tempDataArr = [];
-                let tempData = response.data[0]["value"];
-                for (let i = 0; i < 4; i++) {
-                    let temp = {
-                        "time": "",
-                        "value": 0
-                    }
-                    temp["time"] = response.data[i]["created_at"];
-                    temp["value"] = response.data[i]["value"];
-                    tempDataArr.push(temp);
-                }
-                tempDataArr.reverse();
-                this.setState({ tempDataArr: tempDataArr, tempData: tempData });
-            });
-    }
-
-    render() {
-        return (
-            <div className="container-fluid" style={{ paddingTop: 20 }}>
-                <div className="row">
-                    <div className="info-card-container col-6 mx-3" style={{ backgroundColor: "#776cca" }}>
-                        <div className="info-card-info-container" style={{ backgroundColor: "#655cc8" }}>
-                            <h1 className="info-card-data">
-                                {this.state.tempData}°C
-                                <i className="bi bi-thermometer-half"></i>
-                            </h1>
-                            <h2 className="info-card-type">
-                                Temperature
-                            </h2>
-                            <button className="btn btn-primary info-card-detail">Detail</button>
-                        </div>
-                        <div className="info-card-graph">
-                            <Chart data={this.state.tempDataArr} />
-                        </div>
+    return (
+        <div className="container-fluid" style={{ paddingTop: 20 }}>
+            <div className="row">
+                <div className="info-card-container col-6 mx-3" style={{ backgroundColor: "#ff0000" }}>
+                    <div className="info-card-info-container" style={{ backgroundColor: "#b70000" }}>
+                        <h1 className="info-card-data">
+                            {tempData}°C
+                            <i className="bi bi-thermometer-half"></i>
+                        </h1>
+                        <h2 className="info-card-type">
+                            Temperature
+                        </h2>
+                        <a className="btn btn-primary info-card-detail" href="/tempsensor">Detail</a>
                     </div>
-                    <div className="info-card-container col-6" style={{ backgroundColor: "#57c0ef" }}>
-                        <div className="info-card-info-container" style={{ backgroundColor: "#00a1e1" }}>
-                            <h1 className="info-card-data">
-                                60%
-                                <i className="bi bi-droplet-fill"></i>
-                            </h1>
-                            <h2 className="info-card-type">
-                                Moisture
-                            </h2>
-                            <button className="btn btn-primary info-card-detail">Detail</button>
-                        </div>
-                        <div className="info-card-graph">
-                            <Chart />
-                        </div>
+                    <div className="info-card-graph">
+                        <Chart data={tempDataArr} />
                     </div>
                 </div>
-                <div className="row mt-3">
-                    <div className="info-card-container col-6 mx-3" style={{ backgroundColor: "#cab31e" }}>
-                        <div className="info-card-info-container" style={{ backgroundColor: "#bea500" }}>
-                            <h1 className="info-card-data">
-                                120
-                                <i className="bi bi-brightness-low-fill"></i>
-                            </h1>
-                            <h2 className="info-card-type">
-                                Light
-                            </h2>
-                            <button className="btn btn-primary info-card-detail">Detail</button>
-                        </div>
-                        <div className="info-card-graph">
-                            <Chart />
-                        </div>
+                <div className="info-card-container col-6" style={{ backgroundColor: "#5099f4" }}>
+                    <div className="info-card-info-container" style={{ backgroundColor: "#16246d" }}>
+                        <h1 className="info-card-data">
+                            {moistData}
+                            <i className="bi bi-droplet-fill"></i>
+                        </h1>
+                        <h2 className="info-card-type">
+                            Moisture
+                        </h2>
+                        <a className="btn btn-primary info-card-detail" href="/moistsensor">Detail</a>
                     </div>
-                    <div className="info-card-container col-6" style={{ backgroundColor: "#01a589" }}>
-                        <div className="info-card-info-container" style={{ backgroundColor: "#019577" }}>
-                            <h1 className="info-card-data">
-                                50l
-                                <i className="bi bi-water"></i>
-                            </h1>
-                            <h2 className="info-card-type">
-                                Water
-                            </h2>
-                            <button className="btn btn-primary info-card-detail">Detail</button>
-                        </div>
-                        <div className="info-card-graph">
-                            <Chart />
-                        </div>
+                    <div className="info-card-graph">
+                        <Chart data={moistDataArr} />
                     </div>
                 </div>
             </div>
-        );
-    }
-
+            <div className="row mt-3">
+                <div className="info-card-container col-6 mx-3" style={{ backgroundColor: "#ffba01" }}>
+                    <div className="info-card-info-container" style={{ backgroundColor: "#ffa701" }}>
+                        <h1 className="info-card-data">
+                            {lightData}
+                            <i className="bi bi-brightness-low-fill"></i>
+                        </h1>
+                        <h2 className="info-card-type">
+                            Light
+                        </h2>
+                        <a className="btn btn-primary info-card-detail" href="/lightsensor">Detail</a>
+                    </div>
+                    <div className="info-card-graph">
+                        <Chart data={lightDataArr} />
+                    </div>
+                </div>
+                <div className="info-card-container col-6" style={{ backgroundColor: "#449e48" }}>
+                    <div className="info-card-info-container" style={{ backgroundColor: "#357a38" }}>
+                        <h1 className="info-card-data">
+                            {waterData}
+                            <i className="bi bi-water"></i>
+                        </h1>
+                        <h2 className="info-card-type">
+                            Water
+                        </h2>
+                        <a className="btn btn-primary info-card-detail" href="/watersensor">Detail</a>
+                    </div>
+                    <div className="info-card-graph">
+                        <Chart data={waterDataArr} />
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }

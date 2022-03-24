@@ -7,12 +7,18 @@ import {
   Route,
 } from "react-router-dom";
 import Dashboard from './pages/dashboard';
-import LightSensor from './pages/Lightsensor';
+import LightSensor from './pages/sensors/Lightsensor';
+import MoistSensor from './pages/sensors/MoistSensor';
+import TempSensor from './pages/sensors/TempSensor';
+import WaterSensor from './pages/sensors/Watersensor';
+import Notifications from './pages/notification';
+import User from './pages/user/user';
+
 import './App.css';
 
 function App() {
   return (
-    <div className="container-fluid full-width">
+    <div className="container-fluid">
       <div className="row">
         <div className="col-1">
           <Sidebar />
@@ -22,6 +28,11 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/lightsensor" element={<LightSensor />} />
+              <Route path="/moistsensor" element={<MoistSensor />} />
+              <Route path="/tempsensor" element={<TempSensor />} />
+              <Route path="/watersensor" element={<WaterSensor />} />
+              <Route path="/notification" element={<Notifications />} />
+              <Route path="/user" element={<User />} />
             </Routes>
           </Router>
         </div>
