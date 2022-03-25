@@ -37,7 +37,7 @@ export default function LightSensor() {
             console.log(mqtt_client);
             mqtt_client.on('connect', function () {
                 setConnectionStatus(true);
-                mqtt_client.subscribe(topic, () => { });
+                mqtt_client.subscribe(topic);
             });
             mqtt_client.on('message', (topic, message) => {
                 const value = parseInt(message.toString());
@@ -52,7 +52,6 @@ export default function LightSensor() {
                 mqtt_client.end();
             });
         }
-
         fetching();
     }, [connectionStatus]);
 
@@ -63,7 +62,7 @@ export default function LightSensor() {
                     <DataTables data={[...data].reverse()} />
                 </div>
                 <div className="col-6 speedometer" >
-                    <Speedometers data={currentData} minValue={0} maxValue={200} />
+                    <Speedometers data={currentData} minValue={0} maxValue={500} />
                     <h3 className="current-value">Current Value</h3>
                 </div>
             </div>

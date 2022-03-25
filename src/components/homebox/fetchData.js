@@ -40,4 +40,5 @@ export default function fetching(setData, setDataArr, setConnectionStatus, feed)
         setConnectionStatus(false);
         mqtt_client.end();
     });
+
 }
