@@ -24,13 +24,18 @@ div.device-title {
 
 div.device-title h1 {
   padding-top: 20px;
+  font-weight: 200;
 }
 
 div.device-description {
   color: white;
   font-size: 36px;
-  padding: 10px 100px 0px 100px;
+  padding: 10px 120px 0px 120px;
   text-align: center;
+}
+
+div.device-description h2 {
+  font-weight: 200;
 }
 
 button.view-log-btn {
@@ -79,6 +84,7 @@ div.sensor-title {
 div.sensor-title h1 {
   padding-top: 5px;
   font-size: 36px;
+  font-weight: 200;
 }
 div.sensor-status {
   padding-top: 20px;
@@ -86,6 +92,7 @@ div.sensor-status {
 
 div.sensor-status h3 {
   font-size: 36px;
+  font-weight: 200;
 }
 
 button.edit-value-btn {
