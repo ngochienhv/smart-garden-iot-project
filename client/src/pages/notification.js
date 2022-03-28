@@ -10,7 +10,7 @@ const icons = {
 export default function Notifications() {
     const [message, setMessage] = useState([]);
     useEffect(() => {
-        axios.get('http://localhost:5000/')
+        axios.get('http://localhost:5000/noti/get')
             .then((response) => {
                 let tempMessage = [];
                 for (let i = 0; i < response.data.length; i++) {

@@ -6,7 +6,7 @@ export default function Message({ message }) {
     const [exist, setExist] = useState(true);
     const deleteMess = () => {
         setExist(false);
-        axios.delete('http://localhost:5000/',
+        axios.delete('http://localhost:5000/noti/delete',
             {
                 data: { id: message["id"] },
             });
