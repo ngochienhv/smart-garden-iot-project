@@ -1,15 +1,78 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import LogModal from './viewlogmodal';
 import EditValueModal from './editValueModal';
+import CustomizedSwitches from '../../components/devicecontroll/CustomizedSwitches';
+
 import "./userstyle.css";
 
+var initialState = [
+    {
+        id: 1,
+        task: "water pump modal",
+        open: false
+    },
+    {
+        id: 2,
+        task: "light modal",
+        open: false
+    },
+    {
+        id: 3,
+        task: "temp sensor modal",
+        open: false
+    },
+    {
+        id: 4,
+        task: "moist sensor modal",
+        open: false
+    },
+    {
+        id: 5,
+        task: "light sensor modal",
+        open: false
+    },
+    {
+        id: 6,
+        task: "water sensor modal",
+        open: false
+    },
+];
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case "open":
+            return state.map(todo => {
+                if (todo.id === action.id) {
+                    return { ...todo, open: true };
+                } else {
+                    return todo;
+                }
+            });
+        case "close":
+            return state.map(todo => {
+                if (todo.id === action.id) {
+                    return { ...todo, open: false };
+                } else {
+                    return todo;
+                }
+            });
+        default:
+            return state;
+    };
+};
+
 export default function User() {
-    const [openLog, setOpenLog] = React.useState(false);
-    const [openEdit, setOpenEdit] = React.useState(false);
-    const handleOpenLog = () => setOpenLog(true);
-    const handleCloseLog = () => setOpenLog(false);
-    const handleOpenEdit = () => setOpenEdit(true);
-    const handleCloseEdit = () => setOpenEdit(false);
+    const [state, dispatch] = useReducer(
+        reducer,
+        initialState
+    );
+    const handleModal = state => {
+        dispatch({
+            type: state.action,
+            id: state.id
+        })
+    }
+
     return (
         <div className="container user-container">
             <div className="row device-container">
@@ -20,8 +83,19 @@ export default function User() {
                     <div className="device-description">
                         <h2><b>Last Activity at:</b>  3/24/2022 10:11:54 AM</h2>
                     </div>
-                    <button className="btn btn-primary view-log-btn" onClick={handleOpenLog}>View Full Log</button>
-                    <LogModal open={openLog} handleClose={handleCloseLog} />
+                    <div className="switch-control">
+                        <CustomizedSwitches type={"pump"} />
+                    </div>
+                    <button className="btn btn-primary view-log-btn" onClick={() => {
+                        handleModal({
+                            action: 'open',
+                            id: 1
+                        });
+                    }}>View Full Log</button>
+                    <LogModal open={state.find(e => e.id === 1).open} handleClose={() => handleModal({
+                        action: 'close',
+                        id: 1
+                    })} type={'minipump'} />
                 </div>
                 <div className="col-6 device-box mx-5" style={{ backgroundColor: "#DEAA6E" }}>
                     <div className="device-title" style={{ backgroundColor: "#E17700" }}>
@@ -30,8 +104,19 @@ export default function User() {
                     <div className="device-description">
                         <h2><b>Last Activity at:</b> 3/24/2022 10:11:54 AM</h2>
                     </div>
-                    <button className="btn btn-primary view-log-btn" onClick={handleOpenLog}>View Full Log</button>
-                    <LogModal open={openLog} handleClose={handleCloseLog} />
+                    <div className="switch-control">
+                        <CustomizedSwitches type={"light"} />
+                    </div>
+                    <button className="btn btn-primary view-log-btn" onClick={() => {
+                        handleModal({
+                            action: 'open',
+                            id: 2
+                        });
+                    }}>View Full Log</button>
+                    <LogModal open={state.find(e => e.id === 2).open} handleClose={() => handleModal({
+                        action: 'close',
+                        id: 2
+                    })} type={'light'} />
                 </div>
             </div>
             <div className="row sensor-container1">
@@ -44,8 +129,14 @@ export default function User() {
                     <div className="sensor-status">
                         <h3>Status: OK</h3>
                     </div>
-                    <button className="btn btn-primary edit-value-btn" onClick={handleOpenEdit}>Edit Value</button>
-                    <EditValueModal open={openEdit} handleClose={handleCloseEdit} />
+                    <button className="btn btn-primary edit-value-btn" onClick={() => handleModal({
+                        action: 'open',
+                        id: 3
+                    })}>Edit value</button>
+                    <EditValueModal open={state.find(e => e.id === 3).open} handleClose={() => handleModal({
+                        action: 'close',
+                        id: 3
+                    })} />
                 </div>
                 <div className="col-3 sensor-box" style={{ backgroundColor: "#5099f4" }}>
                     <div className="sensor-title" style={{ backgroundColor: "#16246d" }}>
@@ -56,8 +147,14 @@ export default function User() {
                     <div className="sensor-status">
                         <h3>Status: OK</h3>
                     </div>
-                    <button className="btn btn-primary edit-value-btn" onClick={handleOpenEdit}>Edit Value</button>
-                    <EditValueModal open={openEdit} handleClose={handleCloseEdit} />
+                    <button className="btn btn-primary edit-value-btn" onClick={() => handleModal({
+                        action: 'open',
+                        id: 4
+                    })}>Edit value</button>
+                    <EditValueModal open={state.find(e => e.id === 4).open} handleClose={() => handleModal({
+                        action: 'close',
+                        id: 4
+                    })} />
                 </div>
                 <div className="col-3 sensor-box" style={{ backgroundColor: "#ffba01" }}>
                     <div className="sensor-title" style={{ backgroundColor: "#ffa701" }}>
@@ -68,8 +165,14 @@ export default function User() {
                     <div className="sensor-status">
                         <h3>Status: OK</h3>
                     </div>
-                    <button className="btn btn-primary edit-value-btn" onClick={handleOpenEdit}>Edit Value</button>
-                    <EditValueModal open={openEdit} handleClose={handleCloseEdit} />
+                    <button className="btn btn-primary edit-value-btn" onClick={() => handleModal({
+                        action: 'open',
+                        id: 5
+                    })}>Edit value</button>
+                    <EditValueModal open={state.find(e => e.id === 5).open} handleClose={() => handleModal({
+                        action: 'close',
+                        id: 5
+                    })} />
                 </div>
                 <div className="col-3 sensor-box" style={{ backgroundColor: "#449e48" }}>
                     <div className="sensor-title" style={{ backgroundColor: "#357a38" }}>
@@ -80,8 +183,14 @@ export default function User() {
                     <div className="sensor-status">
                         <h3>Status: OK</h3>
                     </div>
-                    <button className="btn btn-primary edit-value-btn" onClick={handleOpenEdit}>Edit Value</button>
-                    <EditValueModal open={openEdit} handleClose={handleCloseEdit} />
+                    <button className="btn btn-primary edit-value-btn" onClick={() => handleModal({
+                        action: 'open',
+                        id: 6
+                    })}>Edit value</button>
+                    <EditValueModal open={state.find(e => e.id === 6).open} handleClose={() => handleModal({
+                        action: 'close',
+                        id: 6
+                    })} />
                 </div>
             </div>
         </div>

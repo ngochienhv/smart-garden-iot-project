@@ -39,7 +39,7 @@ export default function Notifications() {
         <>
             <h1 style={{ color: "white", textAlign: "center", fontSize: 50 }}>Thông báo</h1>
             <div className="container mt-5">
-                {message.map((message) => <Message message={message} />)}
+                {message.map((message) => <Message message={message} key={message["id"]} />)}
             </div>
         </>
 

@@ -17,9 +17,9 @@ export default function Speedometers({ data, minValue, maxValue }) {
                     segmentColors={[
                         "#7ab55c",
                         "#385828",
-                        "#b81414",
+                        "#f2db5b",
                         "#ec5555",
-                        "#f2db5b"
+                        "#b81414"
                     ]}
                     needleColor="white"
                 />
