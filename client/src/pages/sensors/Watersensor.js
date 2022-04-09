@@ -11,11 +11,11 @@ export default function WaterSensor() {
     const [data, setData] = useState([]);
     const [currentData, setCurrentData] = useState(0);
     const url = 'mqtt://ngochienhv:aio_hRKe39xRu3EXPo7mbFJWfEoMHbqU@io.adafruit.com';
-    const topic = 'ngochienhv/feeds/bbc-water';
+    const topic = 'ngochienhv/feeds/bbc-soil';
 
     useEffect(() => {
         function fetching() {
-            axios.get("https://io.adafruit.com/api/v2/ngochienhv/feeds/bbc-water/data")
+            axios.get("https://io.adafruit.com/api/v2/ngochienhv/feeds/bbc-soil/data")
                 .then((response) => {
                     let tempDataArr = [];
                     let tempData = response.data[0]["value"];
@@ -60,7 +60,7 @@ export default function WaterSensor() {
         <div className="container-fluid sensor-container">
             <div className="row">
                 <div className="col-6">
-                    <DataTables data={[...data].reverse()} />
+                    <DataTables type={"sensor"} data={[...data].reverse()} />
                 </div>
                 <div className="col-6 speedometer" >
                     <Speedometers data={currentData} minValue={0} maxValue={100} />

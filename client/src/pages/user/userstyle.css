@@ -43,7 +43,7 @@ button.view-log-btn {
   font-size: 30px;
   position: relative;
   left: 35px;
-  top: 10px;
+  top: 30px;
   background: transparent;
   border-radius: 52px;
   border: 2px solid white;
@@ -81,11 +81,13 @@ div.sensor-title {
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
+
 div.sensor-title h1 {
   padding-top: 5px;
   font-size: 36px;
   font-weight: 200;
 }
+
 div.sensor-status {
   padding-top: 20px;
 }
@@ -160,6 +162,6 @@ button.edit-value-btn:hover {
 
 div.switch-control {
   position: relative;
-  left: 200px;
+  left: 205px;
   color: white;
 }

@@ -81,7 +81,7 @@ export default function User() {
                         <h1>Water pump</h1>
                     </div>
                     <div className="device-description">
-                        <h2><b>Last Activity at:</b>  3/24/2022 10:11:54 AM</h2>
+                        <h2><b>Switch</b></h2>
                     </div>
                     <div className="switch-control">
                         <CustomizedSwitches type={"pump"} />
@@ -102,7 +102,7 @@ export default function User() {
                         <h1>Light</h1>
                     </div>
                     <div className="device-description">
-                        <h2><b>Last Activity at:</b> 3/24/2022 10:11:54 AM</h2>
+                        <h2><b>Switch</b></h2>
                     </div>
                     <div className="switch-control">
                         <CustomizedSwitches type={"light"} />

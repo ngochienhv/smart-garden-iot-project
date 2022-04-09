@@ -1,4 +1,3 @@
-
 import mqtt from 'mqtt/dist/mqtt';
 
 export default function deviceControll(data, feed) {
@@ -13,10 +12,5 @@ export default function deviceControll(data, feed) {
                 mqtt_client.publish(topic, data);
             }
         });
-    });
-    mqtt_client.on('message', function (topic, message) {
-        // message is Buffer
-        console.log(message.toString());
-        mqtt_client.end();
     });
 }

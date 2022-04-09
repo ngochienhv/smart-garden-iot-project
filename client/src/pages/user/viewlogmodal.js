@@ -29,18 +29,19 @@ export default function LogModal({ open, handleClose, type }) {
                     if (type === 'minipump') {
                         temp = {
                             "pumpEvent": response.data[i].pump_event,
-                            "pumpTime": response.data[i].pump_time,
+                            "pumpTime": new Date(response.data[i].pump_time).toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" }).replace(",", ""),
                             "waterLevel": response.data[i].level
                         };
                     }
                     else {
                         temp = {
                             "lightEvent": response.data[i].light_event,
-                            "lightTime": response.data[i].light_time
+                            "lightTime": new Date(response.data[i].light_time).toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" }).replace(",", "")
                         }
                     }
                     tempData.push(temp);
                 }
+                tempData.reverse();
                 setData(tempData);
             })
     }, [])
@@ -55,11 +56,10 @@ export default function LogModal({ open, handleClose, type }) {
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h4" component="h2">
-                        Device's Log Modal
+                        Device's Log
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        {<DataTables data={data} />}
-                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }} />
+                    {<DataTables data={data} type={type} />}
                 </Box>
             </Modal>
         </div>

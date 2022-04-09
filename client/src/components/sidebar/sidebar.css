@@ -81,3 +81,17 @@ a.sensor-btn-selected {
 a.sensor-btn-selected:hover {
   color: #ffffff;
 }
+
+span.badge {
+  background: red;
+  position: relative;
+  top: -25px;
+  border-radius: 50px;
+  font-size: 12px;
+  text-shadow: none;
+}
+
+i.noti-icon {
+  position: relative;
+  left: 10px;
+}

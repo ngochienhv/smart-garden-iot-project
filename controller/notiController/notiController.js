@@ -7,3 +7,7 @@ exports.getNoti = function (req, res) {
 exports.deleteNoti = function (req, res) {
     noti.deleteNotiModel(req, res);
 }
+
+exports.countNoti = function (req, res) {
+    noti.countNotiModel(req, res);
+}

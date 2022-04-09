@@ -59,7 +59,7 @@ export default function LightSensor() {
         <div className="container-fluid sensor-container">
             <div className="row">
                 <div className="col-6">
-                    <DataTables data={[...data].reverse()} />
+                    <DataTables type={"sensor"} data={[...data].reverse()} />
                 </div>
                 <div className="col-6 speedometer" >
                     <Speedometers data={currentData} minValue={0} maxValue={1000} />

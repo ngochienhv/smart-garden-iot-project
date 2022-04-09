@@ -17,7 +17,7 @@ export default function InformationCard() {
         fetching(setTempData, setTempDataArr, setConnectionStatus, 'bbc-temp');
         fetching(setMoistData, setMoistDataArr, setConnectionStatus, 'bbc-humi');
         fetching(setLightData, setLightDataArr, setConnectionStatus, 'bbc-light');
-        fetching(setWaterData, setWaterDataArr, setConnectionStatus, 'bbc-water');
+        fetching(setWaterData, setWaterDataArr, setConnectionStatus, 'bbc-soil');
     }, [connectionStatus]);
 
     return (
@@ -41,11 +41,11 @@ export default function InformationCard() {
                 <div className="info-card-container col-6" style={{ backgroundColor: "#5099f4" }}>
                     <div className="info-card-info-container" style={{ backgroundColor: "#16246d" }}>
                         <h1 className="info-card-data">
-                            {moistData}
+                            {moistData}%
                             <i className="bi bi-droplet-fill"></i>
                         </h1>
                         <h2 className="info-card-type">
-                            Moisture
+                            Humidity
                         </h2>
                         <a className="btn btn-primary info-card-detail" href="/moistsensor">Detail</a>
                     </div>
@@ -77,7 +77,7 @@ export default function InformationCard() {
                             <i className="bi bi-water"></i>
                         </h1>
                         <h2 className="info-card-type">
-                            Water
+                            Soil Moisture
                         </h2>
                         <a className="btn btn-primary info-card-detail" href="/watersensor">Detail</a>
                     </div>

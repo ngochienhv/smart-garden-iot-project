@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Message from '../components/message/message';
+import MessageModal from '../components/message/messageModal';
 import axios from 'axios';
 
 const icons = {
-    light: <i className="bi bi-lightbulb-fill"></i>,
-    minipump: <i className="bi bi-droplet-half"></i>,
+    light: <i className="bi bi-lightbulb" style={{ color: "yellow" }}></i>,
+    minipump: <i className="bi bi-droplet-half" style={{ color: "blue" }}></i>,
     DHT11: <i className="bi bi-thermometer-half"></i>
 }
 export default function Notifications() {
@@ -28,6 +29,7 @@ export default function Notifications() {
                         "content": response.data[i]["notified"],
                         "icon": icon,
                         "id": response.data[i]["ID_DATA"],
+                        "seen": response.data[i]["Seen"]
                     }
                     tempMessage.push(temp);
                 }
@@ -37,8 +39,7 @@ export default function Notifications() {
     console.log(message);
     return (
         <>
-            <h1 style={{ color: "white", textAlign: "center", fontSize: 50 }}>Thông báo</h1>
-            <div className="container mt-5">
+            <div className="noti-modal container">
                 {message.map((message) => <Message message={message} key={message["id"]} />)}
             </div>
         </>

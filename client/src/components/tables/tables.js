@@ -2,7 +2,7 @@ import React from 'react';
 import { useTable, usePagination } from 'react-table';
 import "./tables.css";
 
-const columns = [
+const sensorColumns = [
     {
         Header: 'Created At',
         accessor: 'time'
@@ -11,6 +11,32 @@ const columns = [
         Header: 'Value',
         accessor: 'value'
     }
+];
+
+const waterColumn = [
+    {
+        Header: 'Pump event',
+        accessor: 'pumpEvent'
+    },
+    {
+        Header: 'Time',
+        accessor: 'pumpTime'
+    },
+    {
+        Header: 'Water level',
+        accessor: 'waterLevel'
+    }
+];
+
+const lightColumn = [
+    {
+        Header: 'Light event',
+        accessor: 'lightEvent'
+    },
+    {
+        Header: 'Time',
+        accessor: 'lightTime'
+    },
 ]
 
 function Table({ columns, data }) {
@@ -95,8 +121,8 @@ function Table({ columns, data }) {
     )
 }
 
-export default function DataTables({ data }) {
+export default function DataTables({ type, data }) {
     return (
-        <Table columns={columns} data={data} />
+        <Table columns={type === "sensor" ? sensorColumns : type === "minipump" ? waterColumn : lightColumn} data={data} />
     )
 }

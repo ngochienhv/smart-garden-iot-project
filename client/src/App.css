@@ -4,3 +4,14 @@ div.container-fluid {
   overflow-x: hidden;
   overflow-y: hidden;
 }
+
+div.noti-modal {
+  width: 500px;
+  height: 100%;
+  position: fixed;
+  top: -1px;
+  z-index: 999;
+  left: 80px;
+  background-color: #1f1f1f;
+  overflow-x: scroll;
+}

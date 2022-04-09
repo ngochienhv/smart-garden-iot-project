@@ -8,4 +8,6 @@ router.get('/get', notiController.getNoti);
 
 router.delete('/delete', jsonParser, notiController.deleteNoti);
 
+router.get('/count', notiController.countNoti);
+
 module.exports = router;

@@ -52,7 +52,8 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
 
 export default function CustomizedSwitches({ type }) {
     console.log(type);
-    const [checked, setChecked] = React.useState(true);
+    const [checked, setChecked] = React.useState(false);
+    const [data, setData] = React.useState(type === 'pump' ? "3" : "0");
     const feed = type === 'pump' ? "bbc-pump" : "bbc-led";
     React.useEffect(() => {
         axios.get(`https://io.adafruit.com/api/v2/ngochienhv/feeds/${feed}/data/retain`)
@@ -76,11 +77,9 @@ export default function CustomizedSwitches({ type }) {
                 }
             })
     }, []);
-    const [data, setData] = React.useState(type === 'pump' ? "3" : "0");
+
     const handleChange = () => {
-        if (checked === true)
-            setChecked(false);
-        else setChecked(true);
+        setChecked(!checked);
     };
 
     const handleDevice = () => {
@@ -104,8 +103,8 @@ export default function CustomizedSwitches({ type }) {
                 deviceControll(data, "bbc-led");
             }
         }
-
     }
+
     return (
         <FormGroup>
             <Stack direction="row" spacing={1} alignItems="center">

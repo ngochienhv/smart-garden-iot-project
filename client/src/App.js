@@ -13,31 +13,37 @@ import TempSensor from './pages/sensors/TempSensor';
 import WaterSensor from './pages/sensors/Watersensor';
 import Notifications from './pages/notification';
 import User from './pages/user/user';
+import React from 'react';
 
 import './App.css';
 
+export const NotiContext = React.createContext();
+
 function App() {
+  const [countNoti, setCountNoti] = React.useState(0);
+
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-1">
-          <Sidebar />
-        </div>
-        <div className="col-11 page-container">
-          <Router>
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/lightsensor" element={<LightSensor />} />
-              <Route path="/moistsensor" element={<MoistSensor />} />
-              <Route path="/tempsensor" element={<TempSensor />} />
-              <Route path="/watersensor" element={<WaterSensor />} />
-              <Route path="/notification" element={<Notifications />} />
-              <Route path="/user" element={<User />} />
-            </Routes>
-          </Router>
+    <NotiContext.Provider value={[countNoti, setCountNoti]}>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-1">
+            <Sidebar />
+          </div>
+          <div className="col-11 page-container">
+            <Router>
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/lightsensor" element={<LightSensor />} />
+                <Route path="/moistsensor" element={<MoistSensor />} />
+                <Route path="/tempsensor" element={<TempSensor />} />
+                <Route path="/watersensor" element={<WaterSensor />} />
+                <Route path="/user" element={<User />} />
+              </Routes>
+            </Router>
+          </div>
         </div>
       </div>
-    </div>
+    </NotiContext.Provider>
   );
 }
 
