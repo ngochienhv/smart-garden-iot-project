@@ -11,3 +11,7 @@ exports.deleteNoti = function (req, res) {
 exports.countNoti = function (req, res) {
     noti.countNotiModel(req, res);
 }
+
+exports.markAsRead = function (req, res) {
+    noti.markAsReadModel(req, res);
+}

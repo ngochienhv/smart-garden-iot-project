@@ -21,7 +21,16 @@ export default function Message({ message }) {
 
     const [open, setOpen] = useState(false);
     console.log(open);
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => {
+        setOpen(true);
+        axios.post('http://localhost:5000/noti/update', {
+            id: message["id"]
+        }).then((res) => {
+            console.log(res);
+        }).catch((err) => {
+            console.log(err);
+        })
+    };
 
     const parseTime = () => {
         var currentDate = new Date();

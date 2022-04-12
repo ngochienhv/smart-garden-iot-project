@@ -14,8 +14,8 @@ export default function MoistSensor() {
     const topic = 'ngochienhv/feeds/bbc-humi';
 
     useEffect(() => {
-        function fetching() {
-            axios.get("https://io.adafruit.com/api/v2/ngochienhv/feeds/bbc-humi/data")
+        async function fetching() {
+            await axios.get("https://io.adafruit.com/api/v2/ngochienhv/feeds/bbc-humi/data")
                 .then((response) => {
                     let tempDataArr = [];
                     let tempData = response.data[0]["value"];
@@ -39,7 +39,7 @@ export default function MoistSensor() {
                 setConnectionStatus(true);
                 mqtt_client.subscribe(topic, () => { });
             });
-            mqtt_client.on('message', (topic, message) => {
+            await mqtt_client.on('message', (topic, message) => {
                 const value = parseInt(message.toString());
                 let tempData = value;
                 let temp = {

@@ -14,8 +14,8 @@ export default function TempSensor() {
     const topic = 'ngochienhv/feeds/bbc-temp';
 
     useEffect(() => {
-        function fetching() {
-            axios.get("https://io.adafruit.com/api/v2/ngochienhv/feeds/bbc-temp/data")
+        async function fetching() {
+            await axios.get("https://io.adafruit.com/api/v2/ngochienhv/feeds/bbc-temp/data")
                 .then((response) => {
                     let tempDataArr = [];
                     let tempData = response.data[0]["value"];
@@ -39,7 +39,7 @@ export default function TempSensor() {
                 setConnectionStatus(true);
                 mqtt_client.subscribe(topic, () => { });
             });
-            mqtt_client.on('message', (topic, message) => {
+            await mqtt_client.on('message', (topic, message) => {
                 const value = parseInt(message.toString());
                 let tempData = value;
                 let temp = {

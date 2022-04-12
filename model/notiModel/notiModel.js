@@ -36,3 +36,16 @@ exports.countNotiModel = function (req, res) {
         res.send("FAILED");
     }
 }
+
+exports.markAsReadModel = function (req, res) {
+    const id = req.body.id;
+    const query = `UPDATE notification SET Seen = 1 WHERE ID_DATA = '${id}'`;
+    try {
+        dbConnection.query(query, [id], (err, results) => {
+            res.status(200).send("OK");
+        });
+    } catch (err) {
+        console.log("ERROR: " + err);
+        res.send("FAILED");
+    }
+}
