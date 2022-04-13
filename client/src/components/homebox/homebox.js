@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './homebox.css';
 import Chart from './charts';
 import fetching from './fetchData';
+import { NotiContext } from '../../App';
 
 export default function InformationCard() {
+    const consumer = React.useContext(NotiContext);
     const [connectionStatus, setConnectionStatus] = React.useState(false);
     const [tempData, setTempData] = useState();
     const [tempDataArr, setTempDataArr] = useState([]);

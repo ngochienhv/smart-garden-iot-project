@@ -13,6 +13,7 @@ export default function LightSensor() {
     const url = 'mqtt://ngochienhv:aio_hRKe39xRu3EXPo7mbFJWfEoMHbqU@io.adafruit.com';
     const topic = 'ngochienhv/feeds/bbc-light';
 
+
     useEffect(() => {
         async function fetching() {
             await axios.get("https://io.adafruit.com/api/v2/ngochienhv/feeds/bbc-light/data")

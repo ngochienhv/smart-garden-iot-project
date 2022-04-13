@@ -55,6 +55,38 @@ export default function CustomizedSwitches({ type }) {
     const [checked, setChecked] = React.useState(false);
     const [data, setData] = React.useState(type === 'pump' ? "3" : "0");
     const feed = type === 'pump' ? "bbc-pump" : "bbc-led";
+
+    const handleChange = () => {
+        setChecked(!checked);
+    };
+
+    const handleDevice = () => {
+        if (checked === true) {
+            if (type === 'pump') {
+                setData("3");
+                deviceControll(data, "bbc-pump");
+            }
+            else {
+                setData("0");
+                deviceControll(data, "bbc-led");
+            }
+        }
+        else {
+            if (type === 'pump') {
+                setData("2");
+                deviceControll(data, "bbc-pump");
+            }
+            else {
+                setData("1");
+                deviceControll(data, "bbc-led");
+            }
+        }
+    }
+
+    React.useEffect(() => {
+        handleDevice()
+    }, [checked])
+
     React.useEffect(() => {
         axios.get(`https://io.adafruit.com/api/v2/ngochienhv/feeds/${feed}/data/retain`)
             .then((response) => {
@@ -78,33 +110,6 @@ export default function CustomizedSwitches({ type }) {
             })
     }, []);
 
-    const handleChange = () => {
-        setChecked(!checked);
-    };
-
-    const handleDevice = () => {
-        if (checked === true) {
-            if (type === 'pump') {
-                setData("2");
-                deviceControll(data, "bbc-pump");
-            }
-            else {
-                setData("1");
-                deviceControll(data, "bbc-led");
-            }
-        }
-        else {
-            if (type === 'pump') {
-                setData("3");
-                deviceControll(data, "bbc-pump");
-            }
-            else {
-                setData("0");
-                deviceControll(data, "bbc-led");
-            }
-        }
-    }
-
     return (
         <FormGroup>
             <Stack direction="row" spacing={1} alignItems="center">
@@ -113,7 +118,6 @@ export default function CustomizedSwitches({ type }) {
                     checked={checked}
                     onChange={() => {
                         handleChange()
-                        handleDevice()
                     }}
                     inputProps={{ 'aria-label': 'ant design' }}
                 />

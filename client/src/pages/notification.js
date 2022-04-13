@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Message from '../components/message/message';
 import axios from 'axios';
-import mqtt from 'mqtt/dist/mqtt';
+import { NotiContext } from '../App';
 
 const icons = {
     light: <i className="bi bi-lightbulb" style={{ color: "yellow" }}></i>,
@@ -10,9 +10,7 @@ const icons = {
 }
 export default function Notifications() {
     const [message, setMessage] = useState([]);
-    const [connectionStatus, setConnectionStatus] = React.useState(false);
-    const url = 'mqtt://ngochienhv:aio_hRKe39xRu3EXPo7mbFJWfEoMHbqU@io.adafruit.com';
-    const topic = `ngochienhv/feeds/bbc-noti`;
+
     useEffect(() => {
         async function fetching() {
             await axios.get('http://localhost:5000/noti/get')
@@ -36,23 +34,13 @@ export default function Notifications() {
                             "seen": response.data[i]["Seen"]
                         }
                         tempMessage.push(temp);
+                        tempMessage.reverse();
                     }
                     setMessage(tempMessage);
                 });
-            const mqtt_client = mqtt.connect(url, 8883);
-            console.log(mqtt_client);
-            mqtt_client.on('connect', function () {
-                setConnectionStatus(true);
-                console.log(connectionStatus);
-                mqtt_client.subscribe(topic, () => { });
-            });
-            mqtt_client.on('message', (topic, message) => {
-                setConnectionStatus(false);
-                mqtt_client.end();
-            });
         }
         fetching();
-    }, [connectionStatus]);
+    }, []);
 
     return (
         <>

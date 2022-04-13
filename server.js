@@ -1,7 +1,7 @@
 var express = require('express'); //Line 1
 var app = express(); //Line 2
 var port = process.env.PORT || 5000; //Line 3
-
+var mqttClient = require('./model/mqttConnection/mqttConnection');
 var notiRoute = require('./controller/routes/notiRoutes');
 var deviceRoute = require('./controller/routes/deviceRoutes');
 var cors = require('cors');

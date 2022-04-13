@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NotiContext } from '../../App';
 import MessageModal from './messageModal';
@@ -6,7 +6,7 @@ import "./message.css";
 
 export default function Message({ message }) {
     const [exist, setExist] = useState(true);
-
+    const [seen, setSeen] = useState(message["seen"]);
     const consumer = React.useContext(NotiContext);
 
     const deleteMess = () => {
@@ -15,14 +15,13 @@ export default function Message({ message }) {
             {
                 data: { id: message["id"] },
             });
-        if (message["seen"] === '0')
-            consumer[1](consumer[0] - 1);
     }
 
     const [open, setOpen] = useState(false);
-    console.log(open);
+
     const handleOpen = () => {
         setOpen(true);
+        setSeen('1');
         axios.post('http://localhost:5000/noti/update', {
             id: message["id"]
         }).then((res) => {
@@ -31,6 +30,11 @@ export default function Message({ message }) {
             console.log(err);
         })
     };
+
+    useEffect(() => {
+        if (seen === '1' || (seen === '0' && exist === false))
+            consumer[1](consumer[0] - 1);
+    }, [seen]);
 
     const parseTime = () => {
         var currentDate = new Date();
@@ -50,8 +54,6 @@ export default function Message({ message }) {
         var currentMinute = currentDate.getMinutes();
         var currentSecond = currentDate.getSeconds();
 
-        console.log(month);
-        console.log(currentMonth);
         if (message.time.split(' ')[2] === 'PM') {
             hour = (parseInt(messtime.split(':')[0]) + 12).toString();
         }
@@ -83,11 +85,11 @@ export default function Message({ message }) {
                     {message["content"]}
                 </div>
                 <div className="row">
-                    {timeSub[1] > 1 ? timeSub[1].toString() + " " + timeSub[0] + "'s ago" : timeSub[1].toString() + " " + timeSub[0] + " ago"}
+                    {timeSub[1] > 1 ? timeSub[1].toString() + " " + timeSub[0] + "s ago" : timeSub[1].toString() + " " + timeSub[0] + " ago"}
                 </div>
             </div>
             <div className="col-2 btn-group close-message">
-                {message["seen"] === 0 ? <i className="bi bi-circle-fill message-unread"></i> : null}
+                {seen === 0 ? <i className="bi bi-circle-fill message-unread"></i> : null}
                 <button className="btn btn-primary message-dismiss" onClick={deleteMess}><i className="bi bi-x-circle"></i></button>
             </div>
             <MessageModal open={open} setOpen={setOpen} data={message} />
