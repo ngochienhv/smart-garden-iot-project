@@ -64,21 +64,17 @@ export default function CustomizedSwitches({ type }) {
         if (checked === true) {
             if (type === 'pump') {
                 setData("3");
-                deviceControll(data, "bbc-pump");
             }
             else {
                 setData("0");
-                deviceControll(data, "bbc-led");
             }
         }
         else {
             if (type === 'pump') {
                 setData("2");
-                deviceControll(data, "bbc-pump");
             }
             else {
                 setData("1");
-                deviceControll(data, "bbc-led");
             }
         }
     }
@@ -110,6 +106,13 @@ export default function CustomizedSwitches({ type }) {
             })
     }, []);
 
+    const sendData = () => {
+        if(type === 'pump') {
+            deviceControll(data, "bbc-pump");
+        } else {
+            deviceControll(data, "bbc-led");
+        }
+    }
     return (
         <FormGroup>
             <Stack direction="row" spacing={1} alignItems="center">
@@ -118,6 +121,7 @@ export default function CustomizedSwitches({ type }) {
                     checked={checked}
                     onChange={() => {
                         handleChange()
+                        sendData()
                     }}
                     inputProps={{ 'aria-label': 'ant design' }}
                 />

@@ -50,7 +50,6 @@ mqttClient.on("message", (topic, message) => {
         ":" +
         curDate.getSeconds();
     const query = `INSERT INTO notification (
-        ID_DATA,
         ID_SENSOR,
         notified,
         Seen,
