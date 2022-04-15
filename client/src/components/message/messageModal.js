@@ -18,7 +18,9 @@ const style = {
 };
 
 export default function MessageModal({ open, setOpen, data }) {
-    const handleClose = () => { setOpen(false) };
+    const handleClose = () => { 
+        setOpen(false);
+    };
 
     return (
         <div>

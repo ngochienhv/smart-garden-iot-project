@@ -11,20 +11,33 @@ import LightSensor from './pages/sensors/Lightsensor';
 import MoistSensor from './pages/sensors/MoistSensor';
 import TempSensor from './pages/sensors/TempSensor';
 import WaterSensor from './pages/sensors/Watersensor';
-import Notifications from './pages/notification';
 import User from './pages/user/user';
 import React from 'react';
-
 import './App.css';
+import socketIOClient from "socket.io-client";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+const host = "http://localhost:5000/";
 export const NotiContext = React.createContext();
 
 function App() {
   const [countNoti, setCountNoti] = React.useState(0);
+  const notify = (data) => toast(data);
+
+  const socketRef = React.useRef();
+
+  React.useEffect(() => {
+    socketRef.current = socketIOClient.connect(host)
+    socketRef.current.on("newNoti", data => {
+      notify(data);
+    })
+  }, []);
 
   return (
     <NotiContext.Provider value={[countNoti, setCountNoti]}>
       <div className="container-fluid">
+      <ToastContainer />
         <div className="row">
           <div className="col-1">
             <Sidebar />

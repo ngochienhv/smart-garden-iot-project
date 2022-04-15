@@ -2,8 +2,9 @@ import React, { useReducer } from 'react';
 import LogModal from './viewlogmodal';
 import EditValueModal from './editValueModal';
 import CustomizedSwitches from '../../components/devicecontroll/CustomizedSwitches';
-
+import mqttClient from '../../components/mqttConnection/mqttConnection';
 import "./userstyle.css";
+
 
 var initialState = [
     {
@@ -62,6 +63,11 @@ const reducer = (state, action) => {
 };
 
 export default function User() {
+    const [connectionStatus, setConnectionStatus] = React.useState(false);
+    const [tempLimit, setTempLimit] = React.useState(35);
+    const [lightLimit, setLightLimit] = React.useState(800);
+    const [soilLimit, setSoilLimit] = React.useState(100);
+    const [humiLimit, setHumiLimit] = React.useState(20);
     const [state, dispatch] = useReducer(
         reducer,
         initialState
@@ -72,6 +78,33 @@ export default function User() {
             id: state.id
         })
     }
+    React.useEffect(() => {
+        mqttClient.on('connect', function () {
+            setConnectionStatus(true);
+        });
+    
+        mqttClient.on("message", (topic, message) => {
+            const value = parseInt(message.toString());
+            switch (topic.split("/")[2]) {
+                case "bbc-temp-limit":
+                    setTempLimit(value);
+                    break;
+                case "bbc-humi-limit":
+                    setHumiLimit(value);
+                    break;
+                case "bbc-light-limit":
+                    setLightLimit(value);
+                    break;
+                case "bbc-soil-limit":
+                    setSoilLimit(value);
+                    break;
+                default:
+                    break;
+            }
+            setConnectionStatus(false);
+        });
+    }, [connectionStatus])
+    
 
     return (
         <div className="container user-container">
@@ -127,7 +160,7 @@ export default function User() {
                         </h1>
                     </div>
                     <div className="sensor-status">
-                        <h3>Status: OK</h3>
+                        <h3>Current Upper Limit: {tempLimit}</h3>
                     </div>
                     <button className="btn btn-primary edit-value-btn" onClick={() => handleModal({
                         action: 'open',
@@ -136,16 +169,16 @@ export default function User() {
                     <EditValueModal open={state.find(e => e.id === 3).open} handleClose={() => handleModal({
                         action: 'close',
                         id: 3
-                    })} />
+                    })} type = {'temp'} initValue={tempLimit}/>
                 </div>
                 <div className="col-3 sensor-box" style={{ backgroundColor: "#5099f4" }}>
                     <div className="sensor-title" style={{ backgroundColor: "#16246d" }}>
                         <h1>
-                            Moisture Sensor
+                            Humid Sensor
                         </h1>
                     </div>
                     <div className="sensor-status">
-                        <h3>Status: OK</h3>
+                        <h3>Current Lower Limit: {humiLimit}</h3>
                     </div>
                     <button className="btn btn-primary edit-value-btn" onClick={() => handleModal({
                         action: 'open',
@@ -154,7 +187,7 @@ export default function User() {
                     <EditValueModal open={state.find(e => e.id === 4).open} handleClose={() => handleModal({
                         action: 'close',
                         id: 4
-                    })} />
+                    })} type={'humid'} initValue={humiLimit}/>
                 </div>
                 <div className="col-3 sensor-box" style={{ backgroundColor: "#ffba01" }}>
                     <div className="sensor-title" style={{ backgroundColor: "#ffa701" }}>
@@ -163,7 +196,7 @@ export default function User() {
                         </h1>
                     </div>
                     <div className="sensor-status">
-                        <h3>Status: OK</h3>
+                        <h3>Current Upper Limit: {lightLimit}</h3>
                     </div>
                     <button className="btn btn-primary edit-value-btn" onClick={() => handleModal({
                         action: 'open',
@@ -172,16 +205,16 @@ export default function User() {
                     <EditValueModal open={state.find(e => e.id === 5).open} handleClose={() => handleModal({
                         action: 'close',
                         id: 5
-                    })} />
+                    })} type={'light'} initValue={lightLimit}/>
                 </div>
                 <div className="col-3 sensor-box" style={{ backgroundColor: "#449e48" }}>
                     <div className="sensor-title" style={{ backgroundColor: "#357a38" }}>
                         <h1>
-                            Water Sensor
+                            Soil moisture Sensor
                         </h1>
                     </div>
                     <div className="sensor-status">
-                        <h3>Status: OK</h3>
+                        <h3>current Lower Limit: {soilLimit}</h3>
                     </div>
                     <button className="btn btn-primary edit-value-btn" onClick={() => handleModal({
                         action: 'open',
@@ -190,7 +223,7 @@ export default function User() {
                     <EditValueModal open={state.find(e => e.id === 6).open} handleClose={() => handleModal({
                         action: 'close',
                         id: 6
-                    })} />
+                    })} type={'soil'} initValue={soilLimit}/>
                 </div>
             </div>
         </div>

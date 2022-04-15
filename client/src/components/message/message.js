@@ -21,19 +21,25 @@ export default function Message({ message }) {
 
     const handleOpen = () => {
         setOpen(true);
-        setSeen('1');
-        axios.post('http://localhost:5000/noti/update', {
-            id: message["id"]
-        }).then((res) => {
-            console.log(res);
-        }).catch((err) => {
-            console.log(err);
-        })
+        console.log(seen);
+        if(seen === 0) {
+            console.log("bruh");
+            setSeen('1');
+            axios.post('http://localhost:5000/noti/update', {
+                id: message["id"]
+            }).then((res) => {
+                console.log(res);
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
     };
 
     useEffect(() => {
-        if (seen === '1' || (seen === '0' && exist === false))
+        if (seen === '1') {
             consumer[1](consumer[0] - 1);
+        }
+
     }, [seen]);
 
     const parseTime = () => {
@@ -89,7 +95,7 @@ export default function Message({ message }) {
                 </div>
             </div>
             <div className="col-2 btn-group close-message">
-                {seen === 0 ? <i className="bi bi-circle-fill message-unread"></i> : null}
+                {seen === 0 ? <i className="bi bi-circle-fill message-unread"></i> : <i className="bi bi-circle-fill message-unread" style={{color: "transparent"}}></i>}
                 <button className="btn btn-primary message-dismiss" onClick={deleteMess}><i className="bi bi-x-circle"></i></button>
             </div>
             <MessageModal open={open} setOpen={setOpen} data={message} />

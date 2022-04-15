@@ -13,5 +13,7 @@
             "database": "heroku_9f7763c54a62eb0",
             "username": "bb9bbad635d32f"
         }
-    ]
+    ],
+    "editor.fontSize": 16,
+    "diffEditor.wordWrap": "on"
 }

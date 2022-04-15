@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Message from '../components/message/message';
 import axios from 'axios';
-import { NotiContext } from '../App';
 
 const icons = {
     light: <i className="bi bi-lightbulb" style={{ color: "yellow" }}></i>,
     minipump: <i className="bi bi-droplet-half" style={{ color: "blue" }}></i>,
-    DHT11: <i className="bi bi-thermometer-half"></i>
+    DHT11: <i className="bi bi-thermometer-half"></i>,
+    soil: <i className="bi bi-water"></i>
 }
 export default function Notifications() {
     const [message, setMessage] = useState([]);
@@ -19,11 +19,13 @@ export default function Notifications() {
                     for (let i = 0; i < response.data.length; i++) {
                         let icon;
                         switch (response.data[i]["ID_SENSOR"]) {
-                            case 1: icon = icons.light;
+                            case 1: icon = icons.DHT11;
                                 break;
-                            case 3: icon = icons.DHT11;
+                            case 2: icon = icons.minipump;
                                 break;
-                            default: icon = icons.minipump;
+                            case 3: icon = icons.soil;
+                                break;
+                            default: icon = icons.light;
                                 break;
                         }
                         let temp = {

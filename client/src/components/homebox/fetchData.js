@@ -1,9 +1,8 @@
 import axios from 'axios';
-import mqtt from 'mqtt/dist/mqtt';
+import mqttClient from '../mqttConnection/mqttConnection';
 
 export default function fetching(setData, setDataArr, setConnectionStatus, feed) {
-    const url = 'mqtt://ngochienhv:aio_hRKe39xRu3EXPo7mbFJWfEoMHbqU@io.adafruit.com';
-    const topic = `ngochienhv/feeds/${feed}`;
+    const curTopic = `ngochienhv/feeds/${feed}`;
     axios.get(`https://io.adafruit.com/api/v2/ngochienhv/feeds/${feed}/data`)
         .then((response) => {
             let tempDataArr = [];
@@ -22,23 +21,19 @@ export default function fetching(setData, setDataArr, setConnectionStatus, feed)
             setDataArr(tempDataArr);
         })
 
-    const mqtt_client = mqtt.connect(url, 8883);
-    console.log(mqtt_client);
-    mqtt_client.on('connect', function () {
+    mqttClient.on('message', (topic, message) => {
         setConnectionStatus(true);
-        mqtt_client.subscribe(topic, () => { });
-    });
-    mqtt_client.on('message', (topic, message) => {
-        const value = parseInt(message.toString());
-        let tempData = value;
-        let temp = {
-            "time": new Date().toISOString(),
-            "value": value
-        };
-        setDataArr(prev => [...prev, temp]);
-        setData(tempData);
-        setConnectionStatus(false);
-        mqtt_client.end();
+        if (topic === curTopic) {
+            const value = parseInt(message.toString());
+            let tempData = value;
+            let temp = {
+                "time": new Date().toISOString(),
+                "value": value
+            };
+            setDataArr(prev => [...prev, temp]);
+            setData(tempData);
+            setConnectionStatus(false);
+        }
     });
 
 }

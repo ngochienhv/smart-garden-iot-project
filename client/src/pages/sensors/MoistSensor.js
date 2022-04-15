@@ -3,15 +3,14 @@ import DataTables from '../../components/tables/tables';
 import Chart from '../../components/homebox/charts';
 import Speedometers from '../../components/speedometer/speedometer';
 import "./sensorstyles.css";
-import mqtt from 'mqtt/dist/mqtt';
+import mqttClient from '../../components/mqttConnection/mqttConnection';
 import axios from 'axios';
 
 export default function MoistSensor() {
     const [connectionStatus, setConnectionStatus] = React.useState(false);
     const [data, setData] = useState([]);
     const [currentData, setCurrentData] = useState(0);
-    const url = 'mqtt://ngochienhv:aio_hRKe39xRu3EXPo7mbFJWfEoMHbqU@io.adafruit.com';
-    const topic = 'ngochienhv/feeds/bbc-humi';
+    const humiTopic = 'ngochienhv/feeds/bbc-humi';
 
     useEffect(() => {
         async function fetching() {
@@ -33,23 +32,19 @@ export default function MoistSensor() {
                     setData(tempDataArr);
                 });
 
-            const mqtt_client = mqtt.connect(url, 8883);
-            console.log(mqtt_client);
-            mqtt_client.on('connect', function () {
+            await mqttClient.on('message', (topic, message) => {
                 setConnectionStatus(true);
-                mqtt_client.subscribe(topic, () => { });
-            });
-            await mqtt_client.on('message', (topic, message) => {
-                const value = parseInt(message.toString());
-                let tempData = value;
-                let temp = {
-                    "time": new Date().toISOString(),
-                    "value": value
-                };
-                setData(prev => [...prev, temp]);
-                setCurrentData(tempData);
-                setConnectionStatus(false);
-                mqtt_client.end();
+                if (topic === humiTopic) {
+                    const value = parseInt(message.toString());
+                    let tempData = value;
+                    let temp = {
+                        "time": new Date().toISOString(),
+                        "value": value
+                    };
+                    setData(prev => [...prev, temp]);
+                    setCurrentData(tempData);
+                    setConnectionStatus(false);
+                }
             });
         }
 
@@ -63,7 +58,7 @@ export default function MoistSensor() {
                     <DataTables type={"sensor"} data={[...data].reverse()} />
                 </div>
                 <div className="col-6 speedometer" >
-                    <Speedometers data={currentData} minValue={0} maxValue={200} />
+                    <Speedometers data={currentData} minValue={0} maxValue={100} />
                     <h3 className="current-value">Current Value</h3>
                 </div>
             </div>

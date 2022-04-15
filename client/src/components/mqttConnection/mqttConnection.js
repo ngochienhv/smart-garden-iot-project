@@ -1,4 +1,6 @@
-var mqtt = require('mqtt');
+import mqtt from 'mqtt/dist/mqtt';
+
+require('events').EventEmitter.prototype._maxListeners = 0;
 
 const url = 'mqtt://ngochienhv:aio_hRKe39xRu3EXPo7mbFJWfEoMHbqU@io.adafruit.com';
 
@@ -54,4 +56,4 @@ mqttClient.on('connect', () => {
     mqttClient.subscribe([lightTopic, moistTopic, humiTopic, tempTopic, pumpTopic, ledTopic, tempLimitTopic, soilLimitTopic, lightLimitTopic, humidLimitTopic]);
 });
 
-module.exports = mqttClient;
+export default mqttClient;
