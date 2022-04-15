@@ -23,6 +23,7 @@ export const NotiContext = React.createContext();
 
 function App() {
   const [countNoti, setCountNoti] = React.useState(0);
+  const [socketConnection, setSocketConection]= React.useState(false);
   const notify = (data) => toast(data);
 
   const socketRef = React.useRef();
@@ -31,16 +32,26 @@ function App() {
     socketRef.current = socketIOClient.connect(host)
     socketRef.current.on("newNoti", data => {
       notify(data);
+      setSocketConection(true);
     })
+
+    return () => {
+      socketRef.current.disconnect();
+    };
   }, []);
 
   return (
     <NotiContext.Provider value={[countNoti, setCountNoti]}>
       <div className="container-fluid">
-      <ToastContainer />
+        <ToastContainer
+          autoClose={4000}
+          position="bottom-right"
+          className="toast-container"
+          toastClassName="dark-toast"
+        />
         <div className="row">
           <div className="col-1">
-            <Sidebar />
+            <Sidebar socketConnection={socketConnection} setSocketConection={setSocketConection}/>
           </div>
           <div className="col-11 page-container">
             <Router>

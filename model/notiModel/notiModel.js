@@ -3,7 +3,7 @@ const mqttClient = require("../mqttConnection/mqttConnection");
 
 
 exports.getNotiModel = function (req, res) {
-    const query = `SELECT * FROM notification`;
+    const query = `SELECT * FROM notification ORDER BY mesureTime DESC`;
     try {
         dbConnection.query(query, (err, results) => {
             res.status(200).send(results);

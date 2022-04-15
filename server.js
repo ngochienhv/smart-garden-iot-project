@@ -152,6 +152,6 @@ mqttClient.on("message", (topic, message) => {
         } catch (err) {
             console.log("ERROR: " + err);
         }
-        socketIo.emit("newNoti", value);
+        socketIo.emit("newNoti", content);
     }
 });

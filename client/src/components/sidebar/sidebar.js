@@ -5,7 +5,7 @@ import { NotiContext } from '../../App';
 import Notifications from '../../pages/notification';
 import './sidebar.css';
 
-export default function Sidebar() {
+export default function Sidebar({socketConnection, setSocketConection}) {
     const consumer = React.useContext(NotiContext);
 
     const checkPath = () => {
@@ -19,18 +19,20 @@ export default function Sidebar() {
     const onClick = () => setShowResults(true);
     const close = () => setShowResults(false);
 
+    async function fetching() {
+        await axios.get('http://localhost:5000/noti/count')
+            .then((response) => {
+                console.log(response.data);
+                if (response.data.length > 1 || (response.data.length === 1 && response.data[0].Seen === 0))
+                    consumer[1](response.data[0].count);
+                else consumer[1](0);
+            })
+            setSocketConection(false);
+    }
+
     React.useEffect(() => {
-        async function fetching() {
-            await axios.get('http://localhost:5000/noti/count')
-                .then((response) => {
-                    console.log(response.data);
-                    if (response.data.length > 1 || (response.data.length === 1 && response.data[0].Seen === 0))
-                        consumer[1](response.data[0].count);
-                    else consumer[1](0);
-                })
-        }
         fetching();
-    }, []);
+    }, [socketConnection]);
     
     React.useEffect(() => {
         consumer[1](consumer[0]);
@@ -49,7 +51,7 @@ export default function Sidebar() {
                     <i className="bi bi-envelope-fill noti-icon"></i>
                     <span className="badge badge-light">{consumer[0]}</span>
                 </a>
-                {showNoti ? <Notifications /> : null}
+                {showNoti ? <Notifications socketConnection={socketConnection} setSocketConection={setSocketConection}/> : null}
                 <a className={window.location.pathname === "/user" ? 'sidebar-btn-selected' : 'sidebar-btn'} href="/user"><i className="bi bi-person-fill"></i></a>
             </div>
         </div>
