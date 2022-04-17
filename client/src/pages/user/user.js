@@ -3,6 +3,7 @@ import LogModal from './viewlogmodal';
 import EditValueModal from './editValueModal';
 import CustomizedSwitches from '../../components/devicecontroll/CustomizedSwitches';
 import mqttClient from '../../components/mqttConnection/mqttConnection';
+import axios from 'axios';
 import "./userstyle.css";
 
 
@@ -64,10 +65,10 @@ const reducer = (state, action) => {
 
 export default function User() {
     const [connectionStatus, setConnectionStatus] = React.useState(false);
-    const [tempLimit, setTempLimit] = React.useState(35);
-    const [lightLimit, setLightLimit] = React.useState(800);
-    const [soilLimit, setSoilLimit] = React.useState(100);
-    const [humiLimit, setHumiLimit] = React.useState(20);
+    const [tempLimit, setTempLimit] = React.useState(0);
+    const [lightLimit, setLightLimit] = React.useState(0);
+    const [soilLimit, setSoilLimit] = React.useState(0);
+    const [humiLimit, setHumiLimit] = React.useState(0);
     const [state, dispatch] = useReducer(
         reducer,
         initialState
@@ -78,11 +79,34 @@ export default function User() {
             id: state.id
         })
     }
+
+    React.useEffect(() => {
+        axios.get('https://io.adafruit.com/api/v2/ngochienhv/feeds/bbc-temp-limit/data/retain')
+            .then((res) => {
+                setTempLimit(parseInt(res.data.split(',')[0]));
+            })
+
+        axios.get('https://io.adafruit.com/api/v2/ngochienhv/feeds/bbc-humi-limit/data/retain')
+            .then((res) => {
+                setHumiLimit(parseInt(res.data.split(',')[0]));
+            })
+
+        axios.get('https://io.adafruit.com/api/v2/ngochienhv/feeds/bbc-soil-limit/data/retain')
+            .then((res) => {
+                setSoilLimit(parseInt(res.data.split(',')[0]));
+            })
+
+        axios.get('https://io.adafruit.com/api/v2/ngochienhv/feeds/bbc-light-limit/data/retain')
+            .then((res) => {
+                setLightLimit(parseInt(res.data.split(',')[0]));
+            })
+    }, [])
+
     React.useEffect(() => {
         mqttClient.on('connect', function () {
             setConnectionStatus(true);
         });
-    
+
         mqttClient.on("message", (topic, message) => {
             const value = parseInt(message.toString());
             switch (topic.split("/")[2]) {
@@ -104,7 +128,7 @@ export default function User() {
             setConnectionStatus(false);
         });
     }, [connectionStatus])
-    
+
 
     return (
         <div className="container user-container">
@@ -169,7 +193,7 @@ export default function User() {
                     <EditValueModal open={state.find(e => e.id === 3).open} handleClose={() => handleModal({
                         action: 'close',
                         id: 3
-                    })} type = {'temp'} initValue={tempLimit}/>
+                    })} type={'temp'}/>
                 </div>
                 <div className="col-3 sensor-box" style={{ backgroundColor: "#5099f4" }}>
                     <div className="sensor-title" style={{ backgroundColor: "#16246d" }}>
@@ -187,7 +211,7 @@ export default function User() {
                     <EditValueModal open={state.find(e => e.id === 4).open} handleClose={() => handleModal({
                         action: 'close',
                         id: 4
-                    })} type={'humid'} initValue={humiLimit}/>
+                    })} type={'humid'}/>
                 </div>
                 <div className="col-3 sensor-box" style={{ backgroundColor: "#ffba01" }}>
                     <div className="sensor-title" style={{ backgroundColor: "#ffa701" }}>
@@ -205,7 +229,7 @@ export default function User() {
                     <EditValueModal open={state.find(e => e.id === 5).open} handleClose={() => handleModal({
                         action: 'close',
                         id: 5
-                    })} type={'light'} initValue={lightLimit}/>
+                    })} type={'light'}/>
                 </div>
                 <div className="col-3 sensor-box" style={{ backgroundColor: "#449e48" }}>
                     <div className="sensor-title" style={{ backgroundColor: "#357a38" }}>
@@ -214,7 +238,7 @@ export default function User() {
                         </h1>
                     </div>
                     <div className="sensor-status">
-                        <h3>current Lower Limit: {soilLimit}</h3>
+                        <h3>Current Lower Limit: {soilLimit}</h3>
                     </div>
                     <button className="btn btn-primary edit-value-btn" onClick={() => handleModal({
                         action: 'open',
@@ -223,7 +247,7 @@ export default function User() {
                     <EditValueModal open={state.find(e => e.id === 6).open} handleClose={() => handleModal({
                         action: 'close',
                         id: 6
-                    })} type={'soil'} initValue={soilLimit}/>
+                    })} type={'soil'}/>
                 </div>
             </div>
         </div>

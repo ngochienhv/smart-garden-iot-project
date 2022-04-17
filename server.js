@@ -8,6 +8,7 @@ var port = process.env.PORT || 5000; //Line 3
 var notiRoute = require('./controller/routes/notiRoutes');
 var deviceRoute = require('./controller/routes/deviceRoutes');
 var cors = require('cors');
+var axios = require('axios');
 app.use(cors());
 
 const socketIo = require("socket.io")(server, {
@@ -35,11 +36,30 @@ server.listen(port, () => console.log(`Listening on port ${port}`)); //Line 6
 app.use('/noti', notiRoute);
 app.use('/device', deviceRoute);
 
+let tempLimit;
+let soilLimit;
+let humiLimit;
+let lightLimit;
 
-let tempLimit = 35;
-let soilLimit = 100;
-let humiLimit = 20;
-let lightLimit = 800;
+axios.get('https://io.adafruit.com/api/v2/ngochienhv/feeds/bbc-temp-limit/data/retain')
+    .then((res) => {
+        tempLimit = res.data.split(',')[0];
+    })
+
+axios.get('https://io.adafruit.com/api/v2/ngochienhv/feeds/bbc-humi-limit/data/retain')
+    .then((res) => {
+        humiLimit = res.data.split(',')[0];
+    })
+
+axios.get('https://io.adafruit.com/api/v2/ngochienhv/feeds/bbc-soil-limit/data/retain')
+    .then((res) => {
+        soilLimit = res.data.split(',')[0];
+    })
+
+axios.get('https://io.adafruit.com/api/v2/ngochienhv/feeds/bbc-light-limit/data/retain')
+    .then((res) => {
+        lightLimit = res.data.split(',')[0];
+    })
 
 mqttClient.on("message", (topic, message) => {
     const value = parseInt(message.toString());

@@ -22,8 +22,8 @@ const lightLimitTopic = 'ngochienhv/feeds/bbc-light-limit';
 const soilLimitTopic = 'ngochienhv/feeds/bbc-soil-limit';
 const humidLimitTopic = 'ngochienhv/feeds/bbc-humi-limit';
 
-export default function EditValueModal({ open, handleClose, type, initValue }) {
-    const [input, setInput] = useState(initValue);
+export default function EditValueModal({ open, handleClose, type }) {
+    const [input, setInput] = useState();
     const setLimit = () => {
         var curTopic;
         if(type==='temp') {

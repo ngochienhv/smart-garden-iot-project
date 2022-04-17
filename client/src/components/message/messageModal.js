@@ -10,7 +10,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 300,
+    width: 350,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -21,7 +21,9 @@ export default function MessageModal({ open, setOpen, data }) {
     const handleClose = () => { 
         setOpen(false);
     };
-
+    const datas = data.content.split('!');
+    let content = datas[0] + "!";
+    let value = datas[1];
     return (
         <div>
             <Modal
@@ -38,10 +40,13 @@ export default function MessageModal({ open, setOpen, data }) {
                 <Fade in={open}>
                     <Box sx={style}>
                         <Typography id="transition-modal-title" variant="h6" component="h2">
-                            {data.content}
+                            <h6 style={{color: "red", fontWeight: 600, fontSize: 35, textAlign: "center"}}>WARNING!</h6>
+                            {content}
+                            <h5>Value: {value}</h5>
                         </Typography>
                         <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                            {data.time}
+                            <h4 style={{ fontWeight: 600, textAlign: "center"}}>Time of data:</h4>
+                            <h5 style={{textAlign: "center"}}>{data.time}</h5>
                         </Typography>
                     </Box>
                 </Fade>

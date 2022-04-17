@@ -1,5 +1,4 @@
 const dbConnection = require("../dbInstance");
-const mqttClient = require("../mqttConnection/mqttConnection");
 
 
 exports.getNotiModel = function (req, res) {
