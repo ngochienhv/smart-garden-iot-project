@@ -24,7 +24,19 @@ export const NotiContext = React.createContext();
 function App() {
   const [countNoti, setCountNoti] = React.useState(0);
   const [socketConnection, setSocketConection]= React.useState(false);
-  const notify = (data) => toast(data);
+
+  const options = {
+    type: toast.TYPE.WARNING,
+    hideProgressBar: true,
+    position: toast.POSITION.BOTTOM_RIGHT,
+    closeOnClick: true,
+    style: {
+      backgroundColor: "black",
+      color: "white"
+    }
+    // and so on ...
+};
+  const notify = (data) => toast(data, options);
 
   const socketRef = React.useRef();
 
@@ -45,9 +57,6 @@ function App() {
       <div className="container-fluid">
         <ToastContainer
           autoClose={4000}
-          position="bottom-right"
-          className="toast-container"
-          toastClassName="dark-toast"
         />
         <div className="row">
           <div className="col-1">
