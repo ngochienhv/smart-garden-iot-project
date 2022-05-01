@@ -5,15 +5,29 @@ import Speedometers from '../../components/speedometer/speedometer';
 import "./sensorstyles.css";
 import mqttClient from '../../components/mqttConnection/mqttConnection';
 import axios from 'axios';
+import { css } from "@emotion/react";
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-radius: 100px;
+  border: 5px solid white;
+  position: absolute;
+  top: 250px;
+  left: 700px;
+`;
 
 export default function LightSensor() {
     const [connectionStatus, setConnectionStatus] = React.useState(false);
     const [data, setData] = useState([]);
     const [currentData, setCurrentData] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
     const lightTopic = 'ngochienhv/feeds/bbc-light';
 
 
     useEffect(() => {
+        setIsLoading(true);
         async function fetching() {
             await axios.get("https://io.adafruit.com/api/v2/ngochienhv/feeds/bbc-light/data")
                 .then((response) => {
@@ -31,6 +45,7 @@ export default function LightSensor() {
                     }
                     tempDataArr.reverse();
                     setData(tempDataArr);
+                    setIsLoading(false);
                 });
 
             await mqttClient.on('message', (topic, message) => {
@@ -52,7 +67,7 @@ export default function LightSensor() {
     }, [connectionStatus]);
 
     return (
-        <div className="container-fluid sensor-container">
+        !isLoading ? < div className="container-fluid sensor-container" >
             <div className="row">
                 <div className="col-6">
                     <DataTables type={"sensor"} data={[...data].reverse()} />
@@ -65,6 +80,6 @@ export default function LightSensor() {
             <div className="row chart">
                 <Chart data={data} />
             </div>
-        </div>
+        </div > : (<ClipLoader color={"#ffffff"} loading={isLoading} css={override} size={100} />)
     );
 }
