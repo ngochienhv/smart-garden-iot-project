@@ -23,7 +23,7 @@ export const NotiContext = React.createContext();
 
 function App() {
   const [countNoti, setCountNoti] = React.useState(0);
-  const [socketConnection, setSocketConection]= React.useState(false);
+  const [socketConnection, setSocketConection] = React.useState(false);
 
   const options = {
     type: toast.TYPE.WARNING,
@@ -32,10 +32,12 @@ function App() {
     closeOnClick: true,
     style: {
       backgroundColor: "black",
-      color: "white"
+      color: "white",
+      border: "1px solid white",
+      borderRadius: 20
     }
     // and so on ...
-};
+  };
   const notify = (data) => toast(data, options);
 
   const socketRef = React.useRef();
@@ -60,7 +62,7 @@ function App() {
         />
         <div className="row">
           <div className="col-1">
-            <Sidebar socketConnection={socketConnection} setSocketConection={setSocketConection}/>
+            <Sidebar socketConnection={socketConnection} setSocketConection={setSocketConection} />
           </div>
           <div className="col-11 page-container">
             <Router>

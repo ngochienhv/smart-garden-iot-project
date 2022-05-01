@@ -184,7 +184,7 @@ export default function User() {
                         </h1>
                     </div>
                     <div className="sensor-status">
-                        <h3>Current Upper Limit: {tempLimit}</h3>
+                        <h3>Current Upper Limit: <b>{tempLimit}</b></h3>
                     </div>
                     <button className="btn btn-primary edit-value-btn" onClick={() => handleModal({
                         action: 'open',
@@ -193,7 +193,7 @@ export default function User() {
                     <EditValueModal open={state.find(e => e.id === 3).open} handleClose={() => handleModal({
                         action: 'close',
                         id: 3
-                    })} type={'temp'}/>
+                    })} type={'temp'} />
                 </div>
                 <div className="col-3 sensor-box" style={{ backgroundColor: "#5099f4" }}>
                     <div className="sensor-title" style={{ backgroundColor: "#16246d" }}>
@@ -202,7 +202,7 @@ export default function User() {
                         </h1>
                     </div>
                     <div className="sensor-status">
-                        <h3>Current Lower Limit: {humiLimit}</h3>
+                        <h3>Current Lower Limit: <b>{humiLimit}</b></h3>
                     </div>
                     <button className="btn btn-primary edit-value-btn" onClick={() => handleModal({
                         action: 'open',
@@ -211,7 +211,7 @@ export default function User() {
                     <EditValueModal open={state.find(e => e.id === 4).open} handleClose={() => handleModal({
                         action: 'close',
                         id: 4
-                    })} type={'humid'}/>
+                    })} type={'humid'} />
                 </div>
                 <div className="col-3 sensor-box" style={{ backgroundColor: "#ffba01" }}>
                     <div className="sensor-title" style={{ backgroundColor: "#ffa701" }}>
@@ -220,7 +220,7 @@ export default function User() {
                         </h1>
                     </div>
                     <div className="sensor-status">
-                        <h3>Current Upper Limit: {lightLimit}</h3>
+                        <h3>Current Upper Limit: <b>{lightLimit}</b></h3>
                     </div>
                     <button className="btn btn-primary edit-value-btn" onClick={() => handleModal({
                         action: 'open',
@@ -229,7 +229,7 @@ export default function User() {
                     <EditValueModal open={state.find(e => e.id === 5).open} handleClose={() => handleModal({
                         action: 'close',
                         id: 5
-                    })} type={'light'}/>
+                    })} type={'light'} />
                 </div>
                 <div className="col-3 sensor-box" style={{ backgroundColor: "#449e48" }}>
                     <div className="sensor-title" style={{ backgroundColor: "#357a38" }}>
@@ -238,7 +238,7 @@ export default function User() {
                         </h1>
                     </div>
                     <div className="sensor-status">
-                        <h3>Current Lower Limit: {soilLimit}</h3>
+                        <h3>Current Lower Limit: <b>{soilLimit}</b></h3>
                     </div>
                     <button className="btn btn-primary edit-value-btn" onClick={() => handleModal({
                         action: 'open',
@@ -247,7 +247,7 @@ export default function User() {
                     <EditValueModal open={state.find(e => e.id === 6).open} handleClose={() => handleModal({
                         action: 'close',
                         id: 6
-                    })} type={'soil'}/>
+                    })} type={'soil'} />
                 </div>
             </div>
         </div>

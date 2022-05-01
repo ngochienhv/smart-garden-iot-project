@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NotiContext } from '../../App';
 import MessageModal from './messageModal';
+import moment from 'moment';
 import "./message.css";
 
 export default function Message({ message }) {
@@ -22,7 +23,7 @@ export default function Message({ message }) {
     const handleOpen = () => {
         setOpen(true);
         console.log(seen);
-        if(seen === 0) {
+        if (seen === 0) {
             console.log("bruh");
             setSeen('1');
             axios.post('http://localhost:5000/noti/update', {
@@ -61,7 +62,7 @@ export default function Message({ message }) {
         var currentSecond = currentDate.getSeconds();
 
         if (message.time.split(' ')[2] === 'PM') {
-            hour = (parseInt(messtime.split(':')[0]) + 12).toString();
+            hour = (parseInt(messtime.split(':')[0]) + 12);
         }
 
         if (year !== currentYear) {
@@ -95,7 +96,7 @@ export default function Message({ message }) {
                 </div>
             </div>
             <div className="col-2 btn-group close-message">
-                {seen === 0 ? <i className="bi bi-circle-fill message-unread"></i> : <i className="bi bi-circle-fill message-unread" style={{color: "transparent"}}></i>}
+                {seen === 0 ? <i className="bi bi-circle-fill message-unread"></i> : <i className="bi bi-circle-fill message-unread" style={{ color: "transparent" }}></i>}
                 <button className="btn btn-primary message-dismiss" onClick={deleteMess}><i className="bi bi-x-circle"></i></button>
             </div>
             <MessageModal open={open} setOpen={setOpen} data={message} />

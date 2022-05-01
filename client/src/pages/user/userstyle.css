@@ -1,5 +1,6 @@
 div.user-container {
   padding-top: 30px;
+  height: 100vh;
 }
 
 div.device-box {
@@ -62,7 +63,7 @@ div.sensor-container1 {
 
 div.sensor-box {
   width: 260px;
-  height: 300px;
+  height: 350px;
   border-radius: 40px;
   color: white;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
@@ -101,7 +102,7 @@ button.edit-value-btn {
   font-size: 30px;
   width: 160px;
   position: relative;
-  top: 15px;
+  top: 50px;
   background: transparent;
   border-radius: 40px;
   border: 2px solid white;
