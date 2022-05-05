@@ -9,6 +9,7 @@ var notiRoute = require('./controller/routes/notiRoutes');
 var deviceRoute = require('./controller/routes/deviceRoutes');
 var cors = require('cors');
 var axios = require('axios');
+var transporter = require('./model/email/emailSender');
 app.use(cors());
 
 const socketIo = require("socket.io")(server, {
@@ -84,6 +85,7 @@ mqttClient.on("message", (topic, message) => {
     const value = parseInt(message.toString());
     var id_sensor;
     var content = "";
+    var subject = "";
     var table = "";
     switch (topic.split("/")[2]) {
         case "bbc-temp":
@@ -91,6 +93,7 @@ mqttClient.on("message", (topic, message) => {
             table = "temp";
             if (value > tempLimit) {
                 content = "Temperature is too high! " + value.toString();
+                subject = "High Temperature"
             }
             break;
         case "bbc-humi":
@@ -98,6 +101,7 @@ mqttClient.on("message", (topic, message) => {
             table = "humid";
             if (value < humiLimit) {
                 content = "Humidity level is too low! " + value.toString();
+                subject = "Low Humidity"
             }
             break;
         case "bbc-soil":
@@ -105,6 +109,7 @@ mqttClient.on("message", (topic, message) => {
             id_sensor = 3;
             if (value < soilLimit) {
                 content = "Soil moisture is too low! " + value.toString();
+                subject = "Low Moisture"
             }
             break;
         case "bbc-light":
@@ -112,6 +117,7 @@ mqttClient.on("message", (topic, message) => {
             id_sensor = 4;
             if (value > lightLimit) {
                 content = "Light level is too high! " + value.toString();
+                subject = "High Light Level"
             }
             break;
         default:
@@ -173,5 +179,20 @@ mqttClient.on("message", (topic, message) => {
             console.log("ERROR: " + err);
         }
         socketIo.emit("newNoti", content);
+
+        var mailOptions = {
+            from: 'ngochien123hv@gmail.com',
+            to: 'ngochien20032001@gmail.com',
+            subject: subject,
+            html: `<h1>${content}</h1>`
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
     }
 });

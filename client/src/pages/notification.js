@@ -7,8 +7,8 @@ import axios from 'axios';
 const icons = {
     light: <i className="bi bi-lightbulb" style={{ color: "yellow" }}></i>,
     minipump: <i className="bi bi-droplet-half" style={{ color: "blue" }}></i>,
-    DHT11: <i className="bi bi-thermometer-half" style={{color: "red"}}></i>,
-    soil: <i className="bi bi-water" style={{color: "green"}}></i>
+    DHT11: <i className="bi bi-thermometer-half" style={{ color: "red" }}></i>,
+    soil: <i className="bi bi-water" style={{ color: "green" }}></i>
 }
 
 const override = css`
@@ -20,7 +20,7 @@ const override = css`
   left: 200px;
 `;
 
-export default function Notifications({socketConnection, setSocketConection}) {
+export default function Notifications({ socketConnection, setSocketConection }) {
     const [message, setMessage] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -50,10 +50,13 @@ export default function Notifications({socketConnection, setSocketConection}) {
                     }
                     tempMessage.push(temp);
                 }
+                for (var i = 0; i < tempMessage.length; i++) {
+                    tempMessage.splice(i + 1, 1);
+                }
                 setMessage(tempMessage);
                 setIsLoading(false);
             });
-            setSocketConection(false);
+        setSocketConection(false);
     }
     useEffect(() => {
         fetching();

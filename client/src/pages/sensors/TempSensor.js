@@ -84,3 +84,4 @@ export default function TempSensor() {
         </div> : (<ClipLoader color={"#ffffff"} loading={isLoading} css={override} size={100} />)
     );
 }
+

@@ -16,6 +16,10 @@ export default function Message({ message }) {
             {
                 data: { id: message["id"] },
             });
+        axios.delete('http://localhost:5000/noti/delete',
+            {
+                data: { id: message["id"] + 10 },
+            });
     }
 
     const [open, setOpen] = useState(false);

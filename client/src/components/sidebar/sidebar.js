@@ -5,7 +5,7 @@ import { NotiContext } from '../../App';
 import Notifications from '../../pages/notification';
 import './sidebar.css';
 
-export default function Sidebar({socketConnection, setSocketConection}) {
+export default function Sidebar({ socketConnection, setSocketConection }) {
     const consumer = React.useContext(NotiContext);
 
     const checkPath = () => {
@@ -24,16 +24,16 @@ export default function Sidebar({socketConnection, setSocketConection}) {
             .then((response) => {
                 console.log(response.data);
                 if (response.data.length > 1 || (response.data.length === 1 && response.data[0].Seen === 0))
-                    consumer[1](response.data[0].count);
+                    consumer[1](Math.ceil(response.data[0].count / 2));
                 else consumer[1](0);
             })
-            setSocketConection(false);
+        setSocketConection(false);
     }
 
     React.useEffect(() => {
         fetching();
     }, [socketConnection]);
-    
+
     React.useEffect(() => {
         consumer[1](consumer[0]);
     }, [consumer[0]])
@@ -51,7 +51,7 @@ export default function Sidebar({socketConnection, setSocketConection}) {
                     <i className="bi bi-envelope-fill noti-icon"></i>
                     <span className="badge badge-light">{consumer[0]}</span>
                 </a>
-                {showNoti ? <Notifications socketConnection={socketConnection} setSocketConection={setSocketConection}/> : null}
+                {showNoti ? <Notifications socketConnection={socketConnection} setSocketConection={setSocketConection} /> : null}
                 <a className={window.location.pathname === "/user" ? 'sidebar-btn-selected' : 'sidebar-btn'} href="/user"><i className="bi bi-person-fill"></i></a>
             </div>
         </div>
