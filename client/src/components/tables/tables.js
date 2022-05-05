@@ -22,10 +22,6 @@ const waterColumn = [
         Header: 'Time',
         accessor: 'pumpTime'
     },
-    {
-        Header: 'Water level',
-        accessor: 'waterLevel'
-    }
 ];
 
 const lightColumn = [

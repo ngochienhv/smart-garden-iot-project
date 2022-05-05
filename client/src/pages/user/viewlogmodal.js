@@ -30,7 +30,6 @@ export default function LogModal({ open, handleClose, type }) {
                         temp = {
                             "pumpEvent": response.data[i].pump_event,
                             "pumpTime": new Date(response.data[i].pump_time).toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" }).replace(",", ""),
-                            "waterLevel": response.data[i].level
                         };
                     }
                     else {
